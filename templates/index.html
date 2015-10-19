@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>WorkoutBuilder</title>
+  <link rel="stylesheet"
+  	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet"
+  	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="static/stylesheets/styles.css">
+</head>
+
+<body>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+   <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <script src="static/js/main.js"></script>
+
+<div class="modal fade bs-example-modal-lg" id = "myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <h1 class = "center-text" style = "margin-bottom: 20px">Paused</h1>
+    </div>
+  </div>
+</div>
+
+
+<div id = "workout_play" class = "hidden" style = "margin-top: 100px">
+
+	<!-- Workout Page-->
+ <div class =  "center-div"> <h1 class = "current-exercise-header center-text"></h1></div>
+ <div class =  "center-div timer-div"><h1 class = "timer center-text">10</h1></div>
+  <button type="button" class="btn btn-primary btn-lg act" id = "goback">Go Back </button>
+  <!--<h2 class = "act" id = "restart">Restart</h2>-->
+  
+  <div class = "act center-div">  <button type="button" class="btn btn-primary btn-lg center-text" id = "pause">Pause </button></div>
+  <button type="button" class="btn btn-primary btn-lg act" id = "skip">Skip </button>
+</div>
+
+
+<div id = "homepage">
+  <div class="navbar navbar-inverse navbar-fixed-top set " role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li><a id = "add-quote" data-toggle="modal" data-target="#insert-exc-modal" data-modaltype="add"href="#">Add Workout</a></li>
+				</ul>
+			</div>
+			<!--/.nav-collapse -->
+		</div>
+	</div>
+
+
+
+<div class = "container set" style = "margin-top: 100px">
+
+{% for workout in workouts_query %}
+<div class = "workout">
+  <h3 class = "workout_header">{{ workout.title }}</h3>
+  <button class = "btn btn-primary workout-buton begin pan" id = "begin_workout">Begin Workout</button>
+  <!--  <button class = "btn btn-default workout-buton edit pan" id = "delete_workout">Delete</button> -->
+  <div id = "sortable" class = "workout_data">
+<p style ="visibility: hidden; position: absolute" class ="titlehidden">{{ workout.title }}</p>
+  {% for exercise in exercise_query %}
+  {% if exercise.workout_title == workout.title %}
+
+
+    <div class = "exc"> <p><span class = "e">{{ exercise.name  }}</span><br><span class = "time">{{  exercise.time   }}</span> Seconds</p> <span class = "hidden rest">{{	exercise.rest       }}</span></div>
+   {% endif %}
+{% endfor %}
+</div>
+</div>
+{% endfor %}
+</div>
+</div>
+	 <!--Insert Modal -->
+	<div class="modal fade" id="insert-exc-modal" tabindex="-1"
+		role="dialog" aria-labelledby="Add Quote" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+					<div class="modal-header">
+
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+						</button>
+								<!-- <form action="/insertworkout" method="POST" class="form-horizontal" role="form"> -->
+						<h4 class="modal-title">Workout Name:</h4>  <input type="text" class="form-control" id="table_header" placeholder="Chest and Back Day" name = "title">
+
+					</div>
+					
+					<input type = "text" name = "entity_key" class = "hidden">
+					<div class="modal-body">
+            			<table  id = "exc-table" class="table table-bordered table-condensed"
+		                    <tr>
+		                      <th>Exercise</th>
+		                      <th>Duration (sec)</th>
+		                      <th>Rest (sec)</th>
+		                      <th></th>
+		                    </tr>
+
+		                    <tr id = "first-row" class = "data-row">
+		                      <td><input type="text" class="form-control e_name" placeholder="Pushups" name = "exercise[]"/></td>
+		                      <td><input type="number" min ="1" class="form-control e_time" placeholder="30" name ="time[]"/></td>
+		                      <td><input type="number" min="1"class="form-control e_rest" placeholder="5"/ name ="rest_time[]"></td>
+		                      <td><button type="button" class = "btn btn-danger btn-xs delete-exer"> <span class="glyphicon glyphicon-remove"></span></button></td>
+		                    </tr>
+		                    <tr id = "template-row" class = "data-row hidden">
+		                      <td><input type="text" class="form-control e_name" placeholder="Pushups" name = "exercise[]"/></td>
+		                      <td><input type="number" min = "1" class="form-control e_time" placeholder="30" name ="time[]"/></td>
+		                      <td><input type="number" min = "1" class="form-control e_rest" placeholder="5"/ name ="rest_time[]"></td>
+		                      <td><button type="button" class = "btn btn-danger btn-xs delete-exer"> <span class="glyphicon glyphicon-remove"></span></button></td>
+		                    </tr>
+                		</table>
+                		<button type="button"  class="btn btn-primary btn-sm add-exercise">Add Exercise</button>
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal" id = "cancel">Cancel</button>
+					<button type="submit" class="btn btn-primary" id = "add-workout">Add Workout</button>
+					</div>
+				<!-- </form> -->
+			</div>
+
+		</div>
+	</div>
+</div>
+
+</body>
+</html>
