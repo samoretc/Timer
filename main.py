@@ -77,13 +77,6 @@ class InsertWorkoutAction(webapp2.RequestHandler):
 class PostBegin(webapp2.RequestHandler):
 	def get(self):
 		template = jinja_env.get_template("templates/workout.html")
-		print 'reached yo template'
-		print template
-		print self
-		print self.response
-		print self.response.out
-		print self.response.out.write('ted')
-		self.response.out.write('ted')
 		self.response.write(template.render( {} ))
 		self.response.clear
 		self.response.headers['Content-Type'] = 'text/plain'
@@ -92,10 +85,7 @@ class PostBegin(webapp2.RequestHandler):
 class DeleteWorkoutAction(webapp2.RequestHandler):
 	def post(self):
 		workout_name = self.request.get("workout_name")
-		
 		self.redirect('/home') 
-# class GetDataAction(webapp2.RequestHandler):
-# 	def get(self):
 
 
 app = webapp2.WSGIApplication([
@@ -106,21 +96,3 @@ app = webapp2.WSGIApplication([
 		# ('/getData', GetDataAction),
 		('/workout', PostBegin)
 ], debug=True)
-
-
-
-		# for exercise in exercises:
-		# 	print exercise.name
-		# 	print 'teached'
-		# 	new_exercise = Exercise( 
-		# 							parent = PARENT_KEY,	
-		# 							name = exercise.name,
-		# 						 	time = exercise.time,
-		# 						 	rest = exercise.rest, 
-		# 						 	workout_title = thisTitle
-		# 					)
-		# 	new_exercise.put()
-			
-		# workout.put()
-		# self.response.headers['Content-Type'] = 'text/plain'
-		# self.response.out.write(self.request)
