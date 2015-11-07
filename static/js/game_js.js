@@ -120,14 +120,7 @@ var controller = {
 
 var view = {
     init: function(){
-    //     $(document).keypress(function( event ) {
-    //     if ( event.which == 32 ) {
-    //       if (GAMESTATE == "PLAYING") {
-    //         controller.pause(); }
-    //       else if (GAMESTATE == "PAUSED") {
-    //           controller.resume(); }
-    //     }
-    // });
+
       $("#pause").click(function(){
         console.log(GAMESTATE);
          if (GAMESTATE == "PLAYING") {
