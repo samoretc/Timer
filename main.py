@@ -93,6 +93,5 @@ app = webapp2.WSGIApplication([
 		('/home', MainWorkoutPage),
 		('/insertworkout', InsertWorkoutAction),
 		('/delete', DeleteWorkoutAction),
-		# ('/getData', GetDataAction),
 		('/workout', PostBegin)
 ], debug=True)
