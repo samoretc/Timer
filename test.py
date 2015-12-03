@@ -26,13 +26,6 @@ class ProblemTests(unittest.TestCase):
 		test_data = 'exercises[1][time]'
 		self.assertEqual( findPosition(test_data), 1)
 
-    # def test_findPosition(self):
-    #     pass
 
-    # def test_good_palindrome(self):
-    #     pass
-
-    # def test_bad_palindrome(self): 
-    #     assert isPalindrome(123) == False
 if __name__ == '__main__':
     unittest.main()
